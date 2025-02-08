@@ -1,26 +1,6 @@
-name: Scheduled all cypress tests 
+name: e2e-tests
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '10 5 * * *'
-jobs:
-  cypress-run:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    steps:
-    - name: Cypress run
-      uses: cypress-io/github-action@v6
-      with:
-        build: npm run build
-        start: npm start
-        browser: chrome
-
-
-
-
-name: e2e-tests
-on: 
-  worfklow_dispatch:
   schedule:
     - cron: '10 5 * * *'
 jobs:
@@ -35,4 +15,3 @@ jobs:
         with:
           start: npx cypress run
           browser: chrome
-     
