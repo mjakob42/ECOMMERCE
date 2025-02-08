@@ -1,0 +1,21 @@
+name: Scheduled all cypress tests 
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 5 * * *'
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Cypress
+      run: npx cypress install --with-deps
+    - name: Run Cypress tests
+      run: npx cypress run
+     
