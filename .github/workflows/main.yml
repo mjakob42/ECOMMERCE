@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '10 5 * * *'
+  push:
+    branches: [ main ]
 jobs:
   cypress-run:
     timeout-minutes: 60
