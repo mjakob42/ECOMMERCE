@@ -126,7 +126,6 @@ describe('Test cases for testing the api', () => {
 
     it(
         'Delete an order', () => {
-            
             const token = Cypress.env('token');
             const authorization = `bearer ${ token }`; // 'TOTO: "authorization": "bearer [object Object]"
 
