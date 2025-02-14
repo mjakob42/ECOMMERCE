@@ -27,11 +27,11 @@ describe('Test cases for testing the api', () => {
 
     it(
         'Filter endpoint books by query parameter type==fiction and check to find books with type fiction', () => {
-            const expectedBooks = ['The Russian', 'The Vanishing Half', 'The Midnight Library', 'Viscount Who Loved Me']
+            const expectedBooksFiction = ['The Russian', 'The Vanishing Half', 'The Midnight Library', 'Viscount Who Loved Me']
 
             cy.request('GET','https://simple-books-api.glitch.me/books?type=fiction').then((response) =>{
                 for (let i = 0; i < 4; i++) {
-                    const booksObject = response.body.filter((item) => item.name === expectedBooks[i])
+                    const booksObject = response.body.filter((item) => item.name === expectedBooksFiction[i])
                     expect(booksObject.length).to.eq(1)
                 }
             })
@@ -40,11 +40,11 @@ describe('Test cases for testing the api', () => {
 
     it(
         'Filter endpoint books by query parameter type==non-fiction and check to not find books with type fiction', () => {
-            const expectedBooks = ['The Russian', 'The Vanishing Half', 'The Midnight Library', 'Viscount Who Loved Me']
+            const booksFiction = ['The Russian', 'The Vanishing Half', 'The Midnight Library', 'Viscount Who Loved Me']
 
             cy.request('GET','https://simple-books-api.glitch.me/books?type=non-fiction').then((response) =>{
                 for (let i = 0; i < 4; i++) {
-                    const booksObject = response.body.filter((item) => item.name === expectedBooks[i])
+                    const booksObject = response.body.filter((item) => item.name === booksFiction[i])
                     expect(booksObject.length).to.eq(0)
                 }
             })
@@ -76,7 +76,6 @@ describe('Test cases for testing the api', () => {
         'Create order', function () {
             const token = Cypress.env('token');
             const authorization = `bearer ${ token }`; // 'TOTO: "authorization": "bearer [object Object]"
-
             cy.request({
                 method: 'POST',
                 url: 'https://simple-books-api.glitch.me/orders/',
@@ -94,7 +93,7 @@ describe('Test cases for testing the api', () => {
     )
 
     it(
-        'Search for an not existing book and check the name', () => {
+        'Search for an existing book by ID and check the name', () => {
             const idBook = 1
 
             cy.request(
@@ -108,7 +107,7 @@ describe('Test cases for testing the api', () => {
     )
 
     it(
-        'Search for an existing order and check the correct id of the book', () => {
+        'Search for an existing order and check the correct ID of the book', () => {
             const idOrder = '8NDIPbvPT3n9NKucP5ZB9'
             const idBook = 1
 
@@ -125,22 +124,69 @@ describe('Test cases for testing the api', () => {
         }
     )
 
-    it.skip(
+    it(
         'Delete an order', () => {
             
+            const token = Cypress.env('token');
+            const authorization = `bearer ${ token }`; // 'TOTO: "authorization": "bearer [object Object]"
+
             cy.request({
-                method: 'GET',
-                url: 'https://simple-books-api.glitch.me/orders/' + idOrder,
-                body: {},
+                method: 'POST',
+                url: 'https://simple-books-api.glitch.me/orders/',
+                body: {
+                    "bookId": 1,
+                    "customerName": "Meier"
+                },
                 headers: {
-                    Authorization: tempToken,
+                    Authorization: tempToken
                 }
             }).then((res) => {
-                expect(res.body.bookId).to.eq(idBook)
+                expect(res.status).to.eq(201)
+                const orderId = res.body.orderId
+                
+                cy.request({
+                    method: 'DELETE',
+                    url: 'https://simple-books-api.glitch.me/orders/' + orderId,
+                    body: {
+                    },
+                    headers: {
+                        Authorization: tempToken
+                    }
+                }).then((res) => {
+                    expect(res.status).to.eq(204)
+                })
             })
         }
     )
 
+    it.skip( // #TODO: tests are failing by retrun codes 4xx
+        'Create token twice', () => {
+            const clientName = uuidv6()
+            const clientEmail = uuidv6() + '@test.com'
 
-
+            cy.request({
+                method: 'POST',
+                url: 'https://simple-books-api.glitch.me/api-clients/',
+                body: {
+                    clientName: clientName,
+                    clientEmail: clientEmail
+                },
+            }).then((res) => {
+                const token = res.body
+                expect(res.status).to.eq(201)
+            }).then((res) => {
+                
+                cy.request({
+                    method: 'POST',
+                    url: 'https://simple-books-api.glitch.me/api-clients/',
+                    body: {
+                        clientName: clientName,
+                        clientEmail: clientEmail
+                    },
+                }).then((res) => {
+                    expect(res.status).to.eq(209)
+                })
+            })
+        }
+    )
 })
