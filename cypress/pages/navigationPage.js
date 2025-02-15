@@ -1,34 +1,34 @@
 export class navigationPage {
   elements = {
-    menueItemSignUp : () => cy.get('#signin2'),
-    menueItemLogIn : () => cy.get('#login2'),
-    menueItemWelcome : () =>  cy.get('#nameofuser'),
-    menueItemCart : () =>  cy.get('#cartur'),
-    menueItemContact : () =>  cy.get('a[data-target="#exampleModal"]').contains('Contact'),
-    menueItemHome : () =>  cy.get('.nav-item>[href="index.html"]')
+    menueItemSignUp: () => cy.get('#signin2'),
+    menueItemLogIn: () => cy.get('#login2'),
+    menueItemWelcome: () =>  cy.get('#nameofuser'),
+    menueItemCart: () =>  cy.get('#cartur'),
+    menueItemContact: () =>  cy.get('a[data-target="#exampleModal"]').contains('Contact'),
+    menueItemHome: () =>  cy.get('.nav-item>[href="index.html"]')
   }
 
-  menueItemSignUpClick(){
+  menueItemSignUpClick() {
     this.elements.menueItemSignUp().click()
   }
 
-  menueItemLogInClick(){
+  menueItemLogInClick() {
     this.elements.menueItemLogIn().click()
   }
 
-  checkWelcomeText(username){
+  checkWelcomeText(username) {
     this.elements.menueItemWelcome().should('have.text', 'Welcome ' + username)
   }
 
-  menueItemCartClick(){
+  menueItemCartClick() {
     this.elements.menueItemCart().click()
   }
 
-  menueItemContactClick(){
+  menueItemContactClick() {
     this.elements.menueItemContact().click()
   }
 
-  menueItemHomeClick(){
+  menueItemHomeClick() {
     this.elements.menueItemHome().click()
   }
 }

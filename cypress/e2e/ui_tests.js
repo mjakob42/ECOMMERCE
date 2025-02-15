@@ -10,11 +10,19 @@ import { contactView } from '../pages/contactPage'
 describe('Test cases for buying items from the shop', () => {
     it(
         'Main test case: Complete shopping process', () => {
-            Cypress.on('uncaught:exception', (err, runnable) => { // #TOTO: Analyse why uncaught:exception is thrown
-                // returning false here prevents Cypress from
-                // failing the test
-                return false
-            });
+            // Want to ensure this sequence of messages / windows alerts
+            const popups = [
+                "Sign up successful.",
+                "Product added.",
+                "Product added.",
+                "Product added."
+            ]
+
+            let counter = 0
+            cy.on("window:alert", str => {
+                expect(str).to.equal(popups[counter++])
+                return true
+            })
 
             cy.visit('');
 
@@ -24,7 +32,6 @@ describe('Test cases for buying items from the shop', () => {
 
             navigationView.menueItemSignUpClick()
             signUpView.signIn(username, password)
-            signUpView.checkWindowsAlter('Sign up successful.')  // TODO: this does only work when uncaught:exception is enabled
 
             // login
             navigationView.menueItemLogInClick()
@@ -70,6 +77,7 @@ describe('Test cases for buying items from the shop', () => {
             // add 1 item to cart
             productOverviewView.clickCategoryLaptobs()
             productOverviewView.addLaptop1ToCart()
+            productOverviewView.checkWindowsAltert('Product added.')
 
             // check cart total
             navigationView.menueItemCartClick()
@@ -94,16 +102,22 @@ describe('Test cases for buying items from the shop', () => {
             navigationView.menueItemContactClick()
             contactView.fillForm('test@abc.de', 'Meier', 'This is a test')
             contactView.submitForm()
-            contactView.checkWindowsAlter('Thanks for the message!!')
+            contactView.checkWindowsAltert('Thanks for the message!!')
         }
     )
 
     it(
         'Register already existing user', () => {
-            Cypress.on('uncaught:exception', (err, runnable) => { // TODO: this does only work when uncaught:exception is enabled
-                // returning false here prevents Cypress from
-                // failing the test
-                return false
+            // Want to ensure this sequence of messages / windows alerts
+            const popups = [
+                "Sign up successful.",
+                "This user already exist.",
+            ]
+
+            let counter = 0
+            cy.on("window:alert", str => {
+                expect(str).to.equal(popups[counter++])
+                return true
             })
 
             cy.visit('');
@@ -114,13 +128,11 @@ describe('Test cases for buying items from the shop', () => {
 
             navigationView.menueItemSignUpClick()
             signUpView.signIn(username, password)
-            signUpView.checkWindowsAlter('Sign up successful.') // TODO: this does only work when uncaught:exception is enabled
 
             // register with the same username again
             navigationView.menueItemHomeClick() // make SignUp button clickable
             navigationView.menueItemSignUpClick()
             signUpView.signIn(username, password)
-            signUpView.checkWindowsAlter('This user already exist.') // TODO: this does only work when uncaught:exception is enabled
         }
     )
 
@@ -135,17 +147,23 @@ describe('Test cases for buying items from the shop', () => {
             placeOrderView.submitForm()
 
             // check for not success
-            placeOrderView.checkWindowsAlter('Please fill out Name and Creditcard.')
+            placeOrderView.checkWindowsAltert('Please fill out Name and Creditcard.')
         }
     )
 
     it(
         'Login with wrong password', () => {
-            Cypress.on('uncaught:exception', (err, runnable) => { // #TOTO: Analyse why uncaught:exception is thrown
-                // returning false here prevents Cypress from
-                // failing the test
-                return false
-            });
+            // Want to ensure this sequence of messages / windows alerts
+            const popups = [
+                "Sign up successful.",
+                "Wrong password.",
+            ]
+
+            let counter = 0
+            cy.on("window:alert", str => {
+                expect(str).to.equal(popups[counter++])
+                return true
+            })
 
             cy.visit('');
 
@@ -155,12 +173,10 @@ describe('Test cases for buying items from the shop', () => {
 
             navigationView.menueItemSignUpClick()
             signUpView.signIn(username, password)
-            signUpView.checkWindowsAlter('Sign up successful.')  // TODO: this does only work when uncaught:exception is enabled
 
             // login with wrong password
             navigationView.menueItemLogInClick()
-            loginView.login(username, 'WrongPassword')
-            loginView.checkWindowsAlter('Wrong password.')  // TODO: this does only work when uncaught:exception is enabled           
+            loginView.login(username, 'WrongPassword')         
         }
     )
 })
