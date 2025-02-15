@@ -32,7 +32,6 @@ describe('Test cases for buying items from the shop', () => {
 
             navigationView.menueItemSignUpClick()
             signUpView.signIn(username, password)
-            //counter = 1
 
             // login
             navigationView.menueItemLogInClick()

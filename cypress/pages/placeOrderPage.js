@@ -1,19 +1,19 @@
 export class placeOrderPage {
   elements = {
     // input form
-    titel : () => cy.get('#orderModalLabel'),
-    inputName : () => cy.get('#name'),
-    inputCountry : () => cy.get('#country'),
-    inputCity : () => cy.get('#city'),
-    inputCard : () => cy.get('#card'),
-    inputMonth : () => cy.get('#month'),
-    inputYear : () => cy.get('#year'),
-    buttonPurchase : () => cy.get('[onclick="purchaseOrder()"]'),
+    titel: () => cy.get('#orderModalLabel'),
+    inputName: () => cy.get('#name'),
+    inputCountry: () => cy.get('#country'),
+    inputCity: () => cy.get('#city'),
+    inputCard: () => cy.get('#card'),
+    inputMonth: () => cy.get('#month'),
+    inputYear: () => cy.get('#year'),
+    buttonPurchase: () => cy.get('[onclick="purchaseOrder()"]'),
 
     // confirmation page
-    iconSuccess : () => cy.get('.sa-placeholder'),
-    infoTtext : () => cy.get('.sweet-alert > h2'),
-    buttonCloseConfirmation : () => cy.get('.confirm')
+    iconSuccess: () => cy.get('.sa-placeholder'),
+    infoTtext: () => cy.get('.sweet-alert > h2'),
+    buttonCloseConfirmation: () => cy.get('.confirm')
 
   }
 
