@@ -11,7 +11,7 @@ export class loginPage {
     this.elements.buttonSubmitLogin().click()
   }
 
-  checkWindowsAlter(expectedMessage) {
+  checkWindowsAltert(expectedMessage) {
     cy.on('window:alert', (txt) => {    
       expect(txt).to.contains(expectedMessage)
     })

@@ -42,7 +42,7 @@ export class placeOrderPage {
     buttonCloseConfirmation().click()
   }
 
-  checkWindowsAlter(expectedMessage) {
+  checkWindowsAltert(expectedMessage) {
     cy.on('window:alert', (txt) => {    
       expect(txt).to.contains(expectedMessage)
     })
