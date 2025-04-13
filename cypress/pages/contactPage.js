@@ -1,13 +1,13 @@
 export class contactPage {
   elements = {
     // input form
-    inputEmail : () => cy.get('#recipient-email'),
-    inputName : () => cy.get('#recipient-name'),
-    inputMessage : () => cy.get('#message-text'),
-    buttenSubmit : () => cy.get('[onclick="send()"]')
+    inputEmail: () => cy.get('#recipient-email'),
+    inputName: () => cy.get('#recipient-name'),
+    inputMessage: () => cy.get('#message-text'),
+    buttenSubmit: () => cy.get('[onclick="send()"]')
   }
 
-  submitForm() {
+  submitForm(){
     this.elements.buttenSubmit().click()
     // check browser popup
     cy.on('window:alert', (txt) => {
@@ -21,12 +21,11 @@ export class contactPage {
     this.elements.inputMessage().type(message)
   }
 
-  checkWindowsAlter(expectedMessage) {
+  checkWindowsAltert(expectedMessage) {
     cy.on('window:alert', (txt) => {    
       expect(txt).to.contains(expectedMessage)
     })
   }
-
 }
 
 export const contactView = new contactPage();

@@ -1,11 +1,11 @@
 export class signUpPage {
   elements = {
-    inputUsername : () => cy.get('#sign-username'),
-    inputUpassword : () => cy.get('#sign-password'),
-    buttonSubmitSignIn : () => cy.get('[onclick="register()"]')
+    inputUsername: () => cy.get('#sign-username'),
+    inputUpassword: () => cy.get('#sign-password'),
+    buttonSubmitSignIn: () => cy.get('[onclick="register()"]')
   }
 
-  signIn(username, password){
+  signIn(username, password) {
     this.elements.inputUsername().clear()
     this.elements.inputUpassword().clear()
 
@@ -14,12 +14,11 @@ export class signUpPage {
     this.elements.buttonSubmitSignIn().click()
   }
 
-  checkWindowsAlter(expectedMessage) {
-    cy.on('window:alert', (txt) => {    
+  checkWindowsAltert(expectedMessage) {
+    cy.on('window:alert', (txt) => {
       expect(txt).to.contains(expectedMessage)
     })
   }
-
 }
 
 export const signUpView = new signUpPage();
