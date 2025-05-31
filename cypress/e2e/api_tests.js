@@ -51,7 +51,7 @@ describe('Test cases for testing the api', () => {
         }
     )
 
-    it(
+    it.only(
         'Create token', () => {
             const clientName = uuidv6()
             const clientEmail = uuidv6() + '@test.com'

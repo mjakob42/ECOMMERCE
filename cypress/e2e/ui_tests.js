@@ -98,7 +98,7 @@ describe('Test cases for buying items from the shop', () => {
     it(
         'Send contact formular', () => {
             cy.visit('')
-            
+
             navigationView.menueItemContactClick()
             contactView.fillForm('test@abc.de', 'Meier', 'This is a test')
             contactView.submitForm()
@@ -121,7 +121,7 @@ describe('Test cases for buying items from the shop', () => {
             })
 
             cy.visit('');
-            
+
             // register
             const username = uuidv6()
             const password = uuidv6()
@@ -176,7 +176,7 @@ describe('Test cases for buying items from the shop', () => {
 
             // login with wrong password
             navigationView.menueItemLogInClick()
-            loginView.login(username, 'WrongPassword')         
+            loginView.login(username, 'WrongPassword')
         }
     )
 })
